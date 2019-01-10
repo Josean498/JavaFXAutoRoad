@@ -6,11 +6,12 @@
 package javafxautoroad;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import static javafx.scene.paint.Color.PINK;
+import static javafx.scene.paint.Color.RED;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 /**
@@ -18,34 +19,22 @@ import javafx.stage.Stage;
  * @author Jose
  */
 public class JavaFXAutoRoad extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World\n Mi juego con Java es el mejor'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
+        Pane root = new Pane();
+        Scene scene = new Scene(root, 600, 400, Color.BROWN);
+        primaryStage.setTitle("PongFX");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        Circle circleBall2 = new Circle(300, 200, 50);
+        Circle circleBall = new Circle(300, 200, 100);
+        circleBall.setFill(PINK);
+        circleBall2.setFill(RED);
+        root.getChildren().add(circleBall);
+        root.getChildren().add(circleBall2);
+
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
 }
