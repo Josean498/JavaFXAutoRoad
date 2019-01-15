@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package javafxautoroad;
 
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import static javafx.scene.paint.Color.AQUA;
 import static javafx.scene.paint.Color.BLACK;
@@ -17,70 +21,138 @@ import static javafx.scene.paint.Color.GRAY;
 import static javafx.scene.paint.Color.ORANGE;
 import static javafx.scene.paint.Color.RED;
 import static javafx.scene.paint.Color.WHITE;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 /* 
  * @author José Antonio Naranjo Ortega.
+ * 1ºDAW.
  */
 
 public class JavaFXAutoRoad extends Application {
+    
+    Pane root;
+    
+    /*
+    Creación de un método para el diseño del coche:
+    */
+    public void coche () { 
+            
+            Group groupCoche = new Group();
+            /*
+            Rectangilo grande del coche, parte trasera del coche.
+            */
+            Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
+            rectangleCoche.setFill(BLUE);
+            groupCoche.getChildren().add(rectangleCoche);
+            /*
+            Son dos rectángulos pequeños que hacen de rudeas del coche.
+            */
+            Rectangle rectangle = new Rectangle(150, 203, 35, 30);
+            rectangle.setFill(BLACK);
+            groupCoche.getChildren().add(rectangle);
 
+            Rectangle rectangle2 = new Rectangle(355, 203, 35, 30);
+            rectangle2.setFill(BLACK);
+            groupCoche.getChildren().add(rectangle2);
+            /*
+            Parte superior del coche odnde va la luna.
+            */
+            Rectangle rectangleCoche2 = new Rectangle(196, 80, 150, 75);
+            rectangleCoche2.setFill(BLUE);
+            groupCoche.getChildren().add(rectangleCoche2);
+            /*
+            Luna del coche.
+            */
+            Rectangle rectangleCoche3 = new Rectangle(209, 88, 125, 40);
+            rectangleCoche3.setFill(AQUA);
+            groupCoche.getChildren().add(rectangleCoche3);
+
+            Rectangle rectangle3 = new Rectangle(216, 74, 115, 6);
+            rectangle3.setFill(BLACK);
+            groupCoche.getChildren().add(rectangle3);
+            /*
+            Los rectángulos rojos y los circulos naranjas son los faros con intermitentes.
+            */
+            Rectangle rectangle4 = new Rectangle(340, 130, 50, 30);
+            rectangle4.setFill(RED);
+            groupCoche.getChildren().add(rectangle4);
+
+            Rectangle rectangle5 = new Rectangle(150, 130, 50, 30);
+            rectangle5.setFill(RED);
+            groupCoche.getChildren().add(rectangle5);
+
+            Circle circleBall = new Circle(170, 144, 7);
+            circleBall.setFill(ORANGE);
+            groupCoche.getChildren().add(circleBall);
+
+            Circle circleBall2 = new Circle(370, 144, 7);
+            circleBall2.setFill(ORANGE);
+            groupCoche.getChildren().add(circleBall2);
+            /*
+            Esto es la matrícula en blanca y lo color aqua tambien forma parte de la matrícula.
+            */
+            Rectangle rectangle6 = new Rectangle(238, 160, 70, 20);
+            rectangle6.setFill(WHITE);
+            groupCoche.getChildren().add(rectangle6);
+
+            Rectangle rectangleCoche7 = new Rectangle(237, 160, 10, 20);
+            rectangleCoche7.setFill(AQUA);
+            groupCoche.getChildren().add(rectangleCoche7);
+            /*
+            Con las elipses he hecho los escapes.
+            */
+            Ellipse ellipse = new Ellipse();
+            {
+                ellipse.setCenterX(295.0f);
+                ellipse.setCenterY(194.0f);
+                ellipse.setRadiusX(16.0f);
+                ellipse.setRadiusY(7.0f);
+                groupCoche.getChildren().add(ellipse);
+                ellipse.setFill(GRAY);
+            }
+
+            Ellipse ellipse2 = new Ellipse();
+            {
+                ellipse2.setCenterX(295.0f);
+                ellipse2.setCenterY(194.0f);
+                ellipse2.setRadiusX(11.0f);
+                ellipse2.setRadiusY(5.0f);
+                groupCoche.getChildren().add(ellipse2);
+                ellipse2.setFill(BLACK);
+            }
+
+            Ellipse ellipse3 = new Ellipse();
+            {
+                ellipse3.setCenterX(250.0f);
+                ellipse3.setCenterY(194.0f);
+                ellipse3.setRadiusX(16.0f);
+                ellipse3.setRadiusY(7.0f);
+                groupCoche.getChildren().add(ellipse3);
+                ellipse3.setFill(GRAY);
+            }
+
+            Ellipse ellipse4 = new Ellipse();
+            {
+                ellipse4.setCenterX(250.0f);
+                ellipse4.setCenterY(194.0f);
+                ellipse4.setRadiusX(11.0f);
+                ellipse4.setRadiusY(5.0f);
+                groupCoche.getChildren().add(ellipse4);
+                ellipse4.setFill(BLACK);
+            }
+            
+        root.getChildren().add(groupCoche);
+        
+    }
+    
     @Override
     public void start(Stage primaryStage) {
-        Pane root = new Pane();
-        Scene scene = new Scene(root, 600, 400, Color.WHITE);
-        primaryStage.setTitle("PongFX");
+        root = new Pane();
+        Scene scene = new Scene(root, 600, 400, Color.GRAY);
+        primaryStage.setTitle("AutoroadFX");
         primaryStage.setScene(scene);
         primaryStage.show();
         
-         Rectangle rectangleCoche = new Rectangle(150,130,240,75);
-        rectangleCoche.setFill(BLUE);
-        root.getChildren().add(rectangleCoche);
+        coche();
         
-        Rectangle rectangle = new Rectangle(150, 203,35,30);
-        rectangle.setFill(BLACK);
-        root.getChildren().add(rectangle);
-        
-        Rectangle rectangle2 = new Rectangle(355, 203, 35,30);
-        rectangle2.setFill(BLACK);
-        root.getChildren().add(rectangle2);
-        
-         Rectangle rectangleCoche2 = new Rectangle(196,80,150,75);
-        rectangleCoche2.setFill(BLUE);
-        root.getChildren().add(rectangleCoche2);
-        
-        Rectangle rectangleCoche3 = new Rectangle(209,88,125,40);
-        rectangleCoche3.setFill(AQUA);
-        root.getChildren().add(rectangleCoche3);
-        
-        Rectangle rectangle3 = new Rectangle(216, 74, 115,6);
-        rectangle3.setFill(BLACK);
-        root.getChildren().add(rectangle3);
-        
-        Rectangle rectangle4 = new Rectangle(340, 130, 50,30);
-        rectangle4.setFill(RED);
-        root.getChildren().add(rectangle4);
-        
-        Rectangle rectangle5 = new Rectangle(150, 130, 50,30);
-        rectangle5.setFill(RED);
-        root.getChildren().add(rectangle5);
-        
-       
-       Circle circleBall = new Circle(170,144,7);
-       circleBall.setFill(ORANGE);
-       root.getChildren().add(circleBall);
-       
-       Circle circleBall2 = new Circle(370,144,7);
-       circleBall2.setFill(ORANGE);
-       root.getChildren().add(circleBall2);
-       
-       Rectangle rectangle6 = new Rectangle(238, 170, 70,20);
-       rectangle6.setFill(WHITE);
-       root.getChildren().add(rectangle6);
-   
-   
     }
-    
 }
