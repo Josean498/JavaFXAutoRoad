@@ -8,6 +8,8 @@ package javafxautoroad;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
@@ -38,7 +40,7 @@ public class JavaFXAutoRoad extends Application {
             
             Group groupCoche = new Group();
             /*
-            Rectangilo grande del coche, parte trasera del coche.
+            Rectángulo grande del coche, parte trasera del coche.
             */
             Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
             rectangleCoche.setFill(BLUE);
@@ -54,7 +56,7 @@ public class JavaFXAutoRoad extends Application {
             rectangle2.setFill(BLACK);
             groupCoche.getChildren().add(rectangle2);
             /*
-            Parte superior del coche odnde va la luna.
+            Parte superior del coche donde va la luna.
             */
             Rectangle rectangleCoche2 = new Rectangle(196, 80, 150, 75);
             rectangleCoche2.setFill(BLUE);
@@ -65,7 +67,9 @@ public class JavaFXAutoRoad extends Application {
             Rectangle rectangleCoche3 = new Rectangle(209, 88, 125, 40);
             rectangleCoche3.setFill(AQUA);
             groupCoche.getChildren().add(rectangleCoche3);
-
+            /*
+            Simulación de un techo solar abierto.
+            */
             Rectangle rectangle3 = new Rectangle(216, 74, 115, 6);
             rectangle3.setFill(BLACK);
             groupCoche.getChildren().add(rectangle3);
@@ -139,19 +143,29 @@ public class JavaFXAutoRoad extends Application {
                 groupCoche.getChildren().add(ellipse4);
                 ellipse4.setFill(BLACK);
             }
-            
+        groupCoche.setScaleX(0.5);
+        groupCoche.setScaleY(0.5);
+        groupCoche.setLayoutX(30);
         root.getChildren().add(groupCoche);
         
+    }
+    
+    public void carretera () {
+       Image image1 = new Image(getClass().getResourceAsStream("images/carretera.png"));
+       ImageView imageView1 = new ImageView(image1);
+       root.getChildren().add(imageView1);
+       imageView1.setFitHeight(600);
+       imageView1.setFitWidth(800);
     }
     
     @Override
     public void start(Stage primaryStage) {
         root = new Pane();
-        Scene scene = new Scene(root, 600, 400, Color.GRAY);
+        Scene scene = new Scene(root, 800, 600, Color.GRAY);
         primaryStage.setTitle("AutoroadFX");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+        carretera();
         coche();
         
     }
