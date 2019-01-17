@@ -5,11 +5,14 @@
  */
 package javafxautoroad;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
@@ -32,7 +35,10 @@ import static javafx.scene.paint.Color.WHITE;
 public class JavaFXAutoRoad extends Application {
     
     Pane root;
-    
+    int posY1 = 0;
+    int posY2 = -800;
+    int velocidad = 4;
+    Scene scene;
     /*
     Creación de un método para el diseño del coche:
     */
@@ -143,9 +149,10 @@ public class JavaFXAutoRoad extends Application {
                 groupCoche.getChildren().add(ellipse4);
                 ellipse4.setFill(BLACK);
             }
-        groupCoche.setScaleX(0.5);
-        groupCoche.setScaleY(0.5);
-        groupCoche.setLayoutX(30);
+        groupCoche.setScaleX(0.55);
+        groupCoche.setScaleY(0.55);
+        groupCoche.setLayoutX(500);
+        groupCoche.setLayoutY(350);
         root.getChildren().add(groupCoche);
         
     }
@@ -154,19 +161,48 @@ public class JavaFXAutoRoad extends Application {
        Image image1 = new Image(getClass().getResourceAsStream("images/carretera.png"));
        ImageView imageView1 = new ImageView(image1);
        root.getChildren().add(imageView1);
-       imageView1.setFitHeight(600);
-       imageView1.setFitWidth(800);
+       imageView1.setFitHeight(800);
+       imageView1.setFitWidth(900);
+       
+       ImageView imageView2 = new ImageView(image1);
+       root.getChildren().add(imageView2);
+       imageView2.setFitHeight(800);
+       imageView2.setFitWidth(900);
+       AnimationTimer animationCoche = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            imageView1.setY(posY1);
+            imageView2.setY(posY2);
+            posY1 += velocidad;
+            posY2 += velocidad;
+            if (posY2==0) {
+                posY1=-800;
+            }
+            if (posY1==0) {
+                posY2=-800;
+            }
+        };
+       };
+       animationCoche.start();
     }
     
+    public void movimiento () {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+            }
+        });
+    }
+
     @Override
     public void start(Stage primaryStage) {
         root = new Pane();
-        Scene scene = new Scene(root, 800, 600, Color.GRAY);
+        scene = new Scene(root, 900, 800, Color.GRAY);
         primaryStage.setTitle("AutoroadFX");
         primaryStage.setScene(scene);
         primaryStage.show();
         carretera();
         coche();
-        
     }
 }
