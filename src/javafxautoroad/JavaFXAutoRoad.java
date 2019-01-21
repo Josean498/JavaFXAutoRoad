@@ -7,7 +7,6 @@ package javafxautoroad;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -27,24 +26,26 @@ import static javafx.scene.paint.Color.ORANGE;
 import static javafx.scene.paint.Color.RED;
 import static javafx.scene.paint.Color.WHITE;
 
+
 /* 
  * @author José Antonio Naranjo Ortega.
  * 1ºDAW.
  */
 
 public class JavaFXAutoRoad extends Application {
-    
     Pane root;
     int posY1 = 0;
     int posY2 = -800;
     int velocidad = 4;
     Scene scene;
+    int cochePosX = 500;
+    int cochePosY = 450;
+    int cocheCurrentSpeed = 0;
+    Group groupCoche = new Group();
     /*
     Creación de un método para el diseño del coche:
     */
-    public void coche () { 
-            
-            Group groupCoche = new Group();
+    public void coche () {
             /*
             Rectángulo grande del coche, parte trasera del coche.
             */
@@ -151,12 +152,14 @@ public class JavaFXAutoRoad extends Application {
             }
         groupCoche.setScaleX(0.55);
         groupCoche.setScaleY(0.55);
-        groupCoche.setLayoutX(500);
-        groupCoche.setLayoutY(350);
+        groupCoche.setLayoutX(cochePosX);
+        groupCoche.setLayoutY(cochePosY);
         root.getChildren().add(groupCoche);
         
     }
-    
+    /*
+    Creación de un método para la carretera y el moviemnto infinito de la imagen:
+    */
     public void carretera () {
        Image image1 = new Image(getClass().getResourceAsStream("images/carretera.png"));
        ImageView imageView1 = new ImageView(image1);
@@ -181,19 +184,32 @@ public class JavaFXAutoRoad extends Application {
             if (posY1==0) {
                 posY2=-800;
             }
+            cochePosX += cocheCurrentSpeed;
+            groupCoche.setLayoutX(cochePosX);
         };
        };
        animationCoche.start();
     }
-    
-    public void movimiento () {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-
-            }
-        });
-    }
+    /*
+    Creación de un método para los obstáculos para que se vayan generando en posiciones aleatorias:
+    */
+    public void obstáculos () {
+        Image image2 = new Image(getClass().getResourceAsStream("images/guardia.png"));
+        ImageView imageView3 = new ImageView(image2);
+        root.getChildren().add(imageView3);
+        imageView3.setFitHeight(150);
+        imageView3.setFitWidth(170);
+      
+        Rectangle rectangleBidon = new Rectangle(300, 300, 50, 70);
+        rectangleBidon.setFill(RED);
+        root.getChildren().add(rectangleBidon);
+        
+        Rectangle rectangleBidon2 = new Rectangle(280, 295, 25, 8);
+        rectangleBidon2.setFill(BLACK);
+        rectangleBidon2.setRotate(20);
+        root.getChildren().add(rectangleBidon2);
+       
+    };
 
     @Override
     public void start(Stage primaryStage) {
@@ -204,5 +220,19 @@ public class JavaFXAutoRoad extends Application {
         primaryStage.show();
         carretera();
         coche();
+        obstáculos();
+        scene.setOnKeyPressed((KeyEvent event) -> {  
+            switch(event.getCode()) {
+                case RIGHT:
+                    cocheCurrentSpeed = 6;
+                    break;
+                case LEFT:                 
+                    cocheCurrentSpeed = -6;
+                    break;
+            } 
+        }); 
+        scene.setOnKeyReleased((KeyEvent event) -> {  
+            cocheCurrentSpeed = 0;
+        });
     }
 }
