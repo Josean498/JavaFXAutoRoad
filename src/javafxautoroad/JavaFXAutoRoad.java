@@ -25,23 +25,24 @@ import static javafx.scene.paint.Color.GRAY;
 import static javafx.scene.paint.Color.ORANGE;
 import static javafx.scene.paint.Color.RED;
 import static javafx.scene.paint.Color.WHITE;
-
-
 /* 
  * @author José Antonio Naranjo Ortega.
  * 1ºDAW.
  */
-
 public class JavaFXAutoRoad extends Application {
     Pane root;
+    Scene scene;
     int posY1 = 0;
     int posY2 = -800;
-    int velocidad = 4;
-    Scene scene;
+    int posXGuardia = 400;
+    int velocidad = 2;
     int cochePosX = 500;
     int cochePosY = 450;
     int cocheCurrentSpeed = 0;
     Group groupCoche = new Group();
+    Group groupBidon = new Group(); 
+    Image imageCarretera = new Image(getClass().getResourceAsStream("images/carretera.png"));
+    Image imageGuardia = new Image(getClass().getResourceAsStream("images/guardia.png"));
     /*
     Creación de un método para el diseño del coche:
     */
@@ -150,6 +151,9 @@ public class JavaFXAutoRoad extends Application {
                 groupCoche.getChildren().add(ellipse4);
                 ellipse4.setFill(BLACK);
             }
+        /*
+         Rescalado, puesto en su pos inicial, agrupado y mostrado del coche:   
+        */
         groupCoche.setScaleX(0.55);
         groupCoche.setScaleY(0.55);
         groupCoche.setLayoutX(cochePosX);
@@ -161,21 +165,20 @@ public class JavaFXAutoRoad extends Application {
     Creación de un método para la carretera y el moviemnto infinito de la imagen:
     */
     public void carretera () {
-       Image image1 = new Image(getClass().getResourceAsStream("images/carretera.png"));
-       ImageView imageView1 = new ImageView(image1);
-       root.getChildren().add(imageView1);
-       imageView1.setFitHeight(800);
-       imageView1.setFitWidth(900);
+       ImageView imageCarretera1 = new ImageView(imageCarretera);
+       root.getChildren().add(imageCarretera1);
+       imageCarretera1.setFitHeight(800);
+       imageCarretera1.setFitWidth(900);
        
-       ImageView imageView2 = new ImageView(image1);
-       root.getChildren().add(imageView2);
-       imageView2.setFitHeight(800);
-       imageView2.setFitWidth(900);
-       AnimationTimer animationCoche = new AnimationTimer() {
+       ImageView imageCarretera2 = new ImageView(imageCarretera);
+       root.getChildren().add(imageCarretera2);
+       imageCarretera2.setFitHeight(800);
+       imageCarretera2.setFitWidth(900);
+       AnimationTimer animationCarretera = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            imageView1.setY(posY1);
-            imageView2.setY(posY2);
+            imageCarretera1.setY(posY1);
+            imageCarretera2.setY(posY2);
             posY1 += velocidad;
             posY2 += velocidad;
             if (posY2==0) {
@@ -188,27 +191,56 @@ public class JavaFXAutoRoad extends Application {
             groupCoche.setLayoutX(cochePosX);
         };
        };
-       animationCoche.start();
+       animationCarretera.start();
     }
     /*
     Creación de un método para los obstáculos para que se vayan generando en posiciones aleatorias:
     */
     public void obstáculos () {
-        Image image2 = new Image(getClass().getResourceAsStream("images/guardia.png"));
-        ImageView imageView3 = new ImageView(image2);
-        root.getChildren().add(imageView3);
-        imageView3.setFitHeight(150);
-        imageView3.setFitWidth(170);
-      
+        ImageView imageGuardia1 = new ImageView(imageGuardia);
+        root.getChildren().add(imageGuardia1);
+        imageGuardia1.setFitHeight(150);
+        imageGuardia1.setFitWidth(170);
+        
+        ImageView imageGuardia2 = new ImageView(imageGuardia);
+        root.getChildren().add(imageGuardia2);
+        imageGuardia2.setFitHeight(150);
+        imageGuardia2.setFitWidth(170);
+        /*
+        Bidón de gasolina:
+        */
         Rectangle rectangleBidon = new Rectangle(300, 300, 50, 70);
         rectangleBidon.setFill(RED);
-        root.getChildren().add(rectangleBidon);
+        groupBidon.getChildren().add(rectangleBidon);
         
         Rectangle rectangleBidon2 = new Rectangle(280, 295, 25, 8);
         rectangleBidon2.setFill(BLACK);
         rectangleBidon2.setRotate(20);
-        root.getChildren().add(rectangleBidon2);
-       
+        /*
+        Agrupar los componetnes del bidñon y mostrarlos.
+        */
+        groupBidon.getChildren().add(rectangleBidon2);
+        root.getChildren().add(groupBidon); 
+        
+        AnimationTimer animationObstaculos = new AnimationTimer() {
+        @Override
+            public void handle(long now) {
+                imageGuardia1.setY(posY1);
+                imageGuardia2.setX(posXGuardia);
+                imageGuardia2.setY(posY1);
+                groupBidon.setLayoutY(posY1);
+                posY1 += velocidad;
+                posY2 += velocidad;
+                if (posY2==0) {
+                    posY1=-800;
+                }
+                if (posY1==0) {
+                    posY2=-800;
+                }
+                
+            };
+        };
+        animationObstaculos.start();
     };
 
     @Override
@@ -219,8 +251,11 @@ public class JavaFXAutoRoad extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         carretera();
-        coche();
         obstáculos();
+        coche();
+        /*
+        Si la tecla es pulsada se mueve y cuando es soltada se queda en la pos que está
+        */
         scene.setOnKeyPressed((KeyEvent event) -> {  
             switch(event.getCode()) {
                 case RIGHT:
