@@ -41,7 +41,7 @@ public class JavaFXAutoRoad extends Application {
     int cochePosY = 450;
     int cocheCurrentSpeed;
     int obstAleatorio;
-    int posXGuardia = 430;
+    int posXGuardia;
     int posYGuardia = 250;
     int limiteX1 = 45;
     int limiteX2 = 850;
@@ -196,9 +196,11 @@ public class JavaFXAutoRoad extends Application {
             imageGuardia1.setLayoutX(posXGuardia + obstAleatorio);
             if (posY2==0) {
                 posY1=-800;
+                posXGuardia = obstAleatorio;
             }
             if (posY1==0) {
                 posY2=-800;
+                posXGuardia = obstAleatorio;
             }
            cochePosX += cocheCurrentSpeed;
            groupCoche.setLayoutX(cochePosX);
@@ -247,7 +249,7 @@ public class JavaFXAutoRoad extends Application {
 //        Rectangle rectangleGuardia3 = new Rectangle(600,-800,170,150);
         
         Random random = new Random();
-        obstAleatorio = random.nextInt();
+        obstAleatorio = random.nextInt(450);
         
         AnimationTimer animationObstaculos = new AnimationTimer() {
         @Override
