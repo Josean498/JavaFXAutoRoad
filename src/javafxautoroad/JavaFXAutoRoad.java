@@ -34,13 +34,18 @@ import javafx.scene.shape.Shape;
 public class JavaFXAutoRoad extends Application {
     Pane root;
     Scene scene;
-    int posY1 = 0;
+    int posY1;
     int posY2 = -800;
-    int posXGuardia = 400;
     int velocidad = 2;
     int cochePosX = 500;
     int cochePosY = 450;
-    int cocheCurrentSpeed = 0;
+    int cocheCurrentSpeed;
+    int obstAleatorio;
+    int posXGuardia = 430;
+    int posYGuardia = 250;
+    int limiteX1 = 45;
+    int limiteX2 = 850;
+    ImageView imageGuardia1;
     Group groupCoche = new Group(); 
     Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
     /*
@@ -178,8 +183,8 @@ public class JavaFXAutoRoad extends Application {
        /*
        Rectangulos de los bordes
        */
-       Rectangle rectangleBorde = new Rectangle(880,0,5,800);
-       Rectangle rectangleBorde2 = new Rectangle(10,0,5,800);
+       Rectangle rectangleBorde = new Rectangle(850,0,5,800);
+       Rectangle rectangleBorde2 = new Rectangle(45,0,5,800);
        AnimationTimer animationCarretera = new AnimationTimer() {
         @Override
         public void handle(long now) {
@@ -187,14 +192,16 @@ public class JavaFXAutoRoad extends Application {
             imageCarretera2.setY(posY2);
             posY1 += velocidad;
             posY2 += velocidad;
+            imageGuardia1.setLayoutY(posY1 +obstAleatorio);
+            imageGuardia1.setLayoutX(posXGuardia + obstAleatorio);
             if (posY2==0) {
                 posY1=-800;
             }
             if (posY1==0) {
                 posY2=-800;
             }
-            cochePosX += cocheCurrentSpeed;
-            groupCoche.setLayoutX(cochePosX);
+           cochePosX += cocheCurrentSpeed;
+           groupCoche.setLayoutX(cochePosX);
            Shape shapeColision = Shape.intersect(rectangleBorde, rectangleCoche);
            Shape shapeColision2 = Shape.intersect(rectangleBorde2, rectangleCoche);
            boolean colisionVacia = shapeColision.getBoundsInLocal().isEmpty();
@@ -207,67 +214,44 @@ public class JavaFXAutoRoad extends Application {
             }
         }
         };
-       animationCarretera.start();
+      animationCarretera.start();
     }
     /*
     Creación de un método para los obstáculos para que se vayan generando en posiciones aleatorias:
     */
     public void obstáculos () {
         Image imageGuardia = new Image(getClass().getResourceAsStream("images/guardia.png"));
-        Group groupBidon = new Group(); 
-        ImageView imageGuardia1 = new ImageView(imageGuardia);
+        
+        imageGuardia1 = new ImageView(imageGuardia);
         root.getChildren().add(imageGuardia1);
-        imageGuardia1.setFitHeight(150);
-        imageGuardia1.setFitWidth(170);
-        Rectangle rectangleGuardia1 = new Rectangle(0,-800,170,150);
+        imageGuardia1.setFitHeight(160);
+        imageGuardia1.setFitWidth(220);
+        imageGuardia1.setLayoutX(posXGuardia);
+        imageGuardia1.setLayoutY(posYGuardia);
+//        Rectangle rectangleGuardia1 = new Rectangle(0,-800,170,150);
         
         ImageView imageGuardia2 = new ImageView(imageGuardia);
         root.getChildren().add(imageGuardia2);
-        imageGuardia2.setFitHeight(150);
-        imageGuardia2.setFitWidth(170);
-        Rectangle rectangleGuardia2 = new Rectangle(400,-800,170,150);
+        imageGuardia2.setFitHeight(160);
+        imageGuardia2.setFitWidth(220);
+        imageGuardia2.setLayoutX(230);
+        imageGuardia2.setLayoutY(350);
+//        Rectangle rectangleGuardia2 = new Rectangle(400,-800,170,150);
         
         ImageView imageGuardia3 = new ImageView(imageGuardia);
         root.getChildren().add(imageGuardia3);
-        imageGuardia3.setFitHeight(150);
-        imageGuardia3.setFitWidth(170);
-        Rectangle rectangleGuardia3 = new Rectangle(600,-800,170,150);
-//        Random random = new Random();
-//        imageGuardia = random.nextInt(900);
-        /*
-        Bidón de gasolina:
-        */
-//        Rectangle rectangleBidon = new Rectangle(300, 300, 50, 70);
-//        rectangleBidon.setFill(RED);
-//        groupBidon.getChildren().add(rectangleBidon);
-//        
-//        Rectangle rectangleBidon2 = new Rectangle(280, 295, 25, 8);
-//        rectangleBidon2.setFill(BLACK);
-//        rectangleBidon2.setRotate(20);
-        /*
-        Agrupar los componetnes del bidñon y mostrarlos.
-        */
-//        groupBidon.getChildren().add(rectangleBidon2);
-//        root.getChildren().add(groupBidon); 
+        imageGuardia3.setFitHeight(160);
+        imageGuardia3.setFitWidth(220);
+        imageGuardia3.setLayoutX(30);
+        imageGuardia3.setLayoutY(150);
+//        Rectangle rectangleGuardia3 = new Rectangle(600,-800,170,150);
+        
+        Random random = new Random();
+        obstAleatorio = random.nextInt();
         
         AnimationTimer animationObstaculos = new AnimationTimer() {
         @Override
-            public void handle(long now) {
-                imageGuardia1.setY(posY1);
-                imageGuardia2.setX(posXGuardia);
-                imageGuardia2.setY(posY1);
-                imageGuardia3.setY(posY1);
-                imageGuardia3.setX(600);
-                groupBidon.setLayoutY(posY1);
-                posY1 += velocidad;
-                posY2 += velocidad;
-                if (posY2==0) {
-                    posY1=-800;
-                }
-                if (posY1==0) {
-                    posY2=-800;
-                }
-                
+            public void handle(long now) {  
             }
         };
         animationObstaculos.start();
@@ -278,7 +262,7 @@ public class JavaFXAutoRoad extends Application {
         cochePosY = 450;
         posY1 = 0;
         posY2 = -800;
-        
+        velocidad = 0;
     }
     @Override
     public void start(Stage primaryStage) {
@@ -300,6 +284,10 @@ public class JavaFXAutoRoad extends Application {
                     break;
                 case LEFT:                 
                     cocheCurrentSpeed = -6;
+                    break;
+                case ENTER:
+                    reinicio();
+                    velocidad = 2;
                     break;
             } 
         }); 
