@@ -34,6 +34,8 @@ import javafx.scene.shape.Shape;
 public class JavaFXAutoRoad extends Application {
     Pane root;
     Scene scene;
+    int sceneTamX = 900;
+    int sceneTamY = 800;
     int posY1;
     int posY2 = -800;
     int velocidad = 2;
@@ -41,10 +43,9 @@ public class JavaFXAutoRoad extends Application {
     int cochePosY = 450;
     int cocheCurrentSpeed;
     int obstAleatorio;
+    int obstAleatorio2;
+    int posYGuardia;
     int posXGuardia;
-    int posYGuardia = 250;
-    int limiteX1 = 45;
-    int limiteX2 = 850;
     ImageView imageGuardia1;
     Group groupCoche = new Group(); 
     Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
@@ -192,15 +193,11 @@ public class JavaFXAutoRoad extends Application {
             imageCarretera2.setY(posY2);
             posY1 += velocidad;
             posY2 += velocidad;
-            imageGuardia1.setLayoutY(posY1 +obstAleatorio);
-            imageGuardia1.setLayoutX(posXGuardia + obstAleatorio);
             if (posY2==0) {
                 posY1=-800;
-                posXGuardia = obstAleatorio;
             }
             if (posY1==0) {
                 posY2=-800;
-                posXGuardia = obstAleatorio;
             }
            cochePosX += cocheCurrentSpeed;
            groupCoche.setLayoutX(cochePosX);
@@ -223,37 +220,46 @@ public class JavaFXAutoRoad extends Application {
     */
     public void obstáculos () {
         Image imageGuardia = new Image(getClass().getResourceAsStream("images/guardia.png"));
-        
         imageGuardia1 = new ImageView(imageGuardia);
         root.getChildren().add(imageGuardia1);
         imageGuardia1.setFitHeight(160);
         imageGuardia1.setFitWidth(220);
-        imageGuardia1.setLayoutX(posXGuardia);
-        imageGuardia1.setLayoutY(posYGuardia);
 //        Rectangle rectangleGuardia1 = new Rectangle(0,-800,170,150);
         
-        ImageView imageGuardia2 = new ImageView(imageGuardia);
-        root.getChildren().add(imageGuardia2);
-        imageGuardia2.setFitHeight(160);
-        imageGuardia2.setFitWidth(220);
-        imageGuardia2.setLayoutX(230);
-        imageGuardia2.setLayoutY(350);
-//        Rectangle rectangleGuardia2 = new Rectangle(400,-800,170,150);
-        
-        ImageView imageGuardia3 = new ImageView(imageGuardia);
-        root.getChildren().add(imageGuardia3);
-        imageGuardia3.setFitHeight(160);
-        imageGuardia3.setFitWidth(220);
-        imageGuardia3.setLayoutX(30);
-        imageGuardia3.setLayoutY(150);
+//        ImageView imageGuardia2 = new ImageView(imageGuardia);
+//        root.getChildren().add(imageGuardia2);
+//        imageGuardia2.setFitHeight(160);
+//        imageGuardia2.setFitWidth(220);
+////        Rectangle rectangleGuardia2 = new Rectangle(400,-800,170,150);
+//        
+//        ImageView imageGuardia3 = new ImageView(imageGuardia);
+//        root.getChildren().add(imageGuardia3);
+//        imageGuardia3.setFitHeight(160);
+//        imageGuardia3.setFitWidth(220);
 //        Rectangle rectangleGuardia3 = new Rectangle(600,-800,170,150);
         
         Random random = new Random();
-        obstAleatorio = random.nextInt(450);
-        
+        obstAleatorio = random.nextInt(4);
+        if(obstAleatorio == 0) {
+           imageGuardia1.setLayoutX(35);
+        }
+        if(obstAleatorio == 1) {
+            imageGuardia1.setLayoutX(240);
+        }
+        if(obstAleatorio == 2) {
+            imageGuardia1.setLayoutX(430);
+        }
+        if(obstAleatorio == 3) {
+            imageGuardia1.setLayoutX(630);
+        }
+        /*
+        Hacer lo de arruba con un switch
+        */
         AnimationTimer animationObstaculos = new AnimationTimer() {
         @Override
-            public void handle(long now) {  
+            public void handle(long now) { 
+//                imageGuardia1.setY(posYGuardia + obstAleatorio2);
+//                imageGuardia1.setX(posXGuardia + obstAleatorio); 
             }
         };
         animationObstaculos.start();
@@ -269,7 +275,7 @@ public class JavaFXAutoRoad extends Application {
     @Override
     public void start(Stage primaryStage) {
         root = new Pane();
-        scene = new Scene(root, 900, 800, Color.GRAY);
+        scene = new Scene(root, sceneTamX, sceneTamY, Color.GRAY);
         primaryStage.setTitle("AutoroadFX");
         primaryStage.setScene(scene);
         primaryStage.show();
