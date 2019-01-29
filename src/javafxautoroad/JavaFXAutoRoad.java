@@ -39,15 +39,17 @@ public class JavaFXAutoRoad extends Application {
     int posY1;
     int posY2 = -800;
     int velocidad = 2;
+    int velocidadGuardia = 4;
     int cochePosX = 500;
     int cochePosY = 450;
     int cocheCurrentSpeed;
     int obstAleatorio;
-    int obstAleatorio2;
-    int posYGuardia;
-    int posXGuardia;
+    int posYGuardia = -400;
     ImageView imageGuardia1;
-    Group groupCoche = new Group(); 
+    ImageView imageGuardia2;
+    ImageView imageGuardia3;
+    Group groupCoche = new Group();
+    Random random = new Random();
     Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
     /*
     Creación de un método para el diseño del coche:
@@ -167,6 +169,7 @@ public class JavaFXAutoRoad extends Application {
         root.getChildren().add(groupCoche);
         
     }
+    
     /*
     Creación de un método para la carretera y el moviemnto infinito de la imagen:
     */
@@ -215,6 +218,7 @@ public class JavaFXAutoRoad extends Application {
         };
       animationCarretera.start();
     }
+    
     /*
     Creación de un método para los obstáculos para que se vayan generando en posiciones aleatorias:
     */
@@ -226,43 +230,50 @@ public class JavaFXAutoRoad extends Application {
         imageGuardia1.setFitWidth(220);
 //        Rectangle rectangleGuardia1 = new Rectangle(0,-800,170,150);
         
-//        ImageView imageGuardia2 = new ImageView(imageGuardia);
-//        root.getChildren().add(imageGuardia2);
-//        imageGuardia2.setFitHeight(160);
-//        imageGuardia2.setFitWidth(220);
-////        Rectangle rectangleGuardia2 = new Rectangle(400,-800,170,150);
-//        
-//        ImageView imageGuardia3 = new ImageView(imageGuardia);
-//        root.getChildren().add(imageGuardia3);
-//        imageGuardia3.setFitHeight(160);
-//        imageGuardia3.setFitWidth(220);
+        imageGuardia2 = new ImageView(imageGuardia);
+        root.getChildren().add(imageGuardia2);
+        imageGuardia2.setFitHeight(160);
+        imageGuardia2.setFitWidth(220);
+//        Rectangle rectangleGuardia2 = new Rectangle(400,-800,170,150);
+
+        imageGuardia3 = new ImageView(imageGuardia);
+        root.getChildren().add(imageGuardia3);
+        imageGuardia3.setFitHeight(160);
+        imageGuardia3.setFitWidth(220);
 //        Rectangle rectangleGuardia3 = new Rectangle(600,-800,170,150);
         
-        Random random = new Random();
-        obstAleatorio = random.nextInt(4);
-        if(obstAleatorio == 0) {
-           imageGuardia1.setLayoutX(35);
-        }
-        if(obstAleatorio == 1) {
-            imageGuardia1.setLayoutX(240);
-        }
-        if(obstAleatorio == 2) {
-            imageGuardia1.setLayoutX(430);
-        }
-        if(obstAleatorio == 3) {
-            imageGuardia1.setLayoutX(630);
-        }
-        /*
-        Hacer lo de arruba con un switch
-        */
         AnimationTimer animationObstaculos = new AnimationTimer() {
         @Override
             public void handle(long now) { 
-//                imageGuardia1.setY(posYGuardia + obstAleatorio2);
-//                imageGuardia1.setX(posXGuardia + obstAleatorio); 
+                imageGuardia1.setY(posYGuardia);
+                imageGuardia2.setY(posYGuardia);
+                imageGuardia3.setY(posYGuardia);
+                posYGuardia += velocidadGuardia;
+                if (posYGuardia >= 800){
+                    posYGuardia = -200;
+                    obstAleatorio();
+                }
             }
         };
         animationObstaculos.start();
+    }
+    
+    public void obstAleatorio() {
+        obstAleatorio = random.nextInt(4);
+        switch(obstAleatorio) {
+                case 0:
+                    imageGuardia1.setX(45);
+                    break;
+                case 1:                 
+                    imageGuardia1.setX(240);
+                    break;
+                case 2:
+                    imageGuardia1.setX(430);
+                    break;
+                case 3:
+                    imageGuardia1.setX(630);
+                    break;
+            }
     }
 
     public void reinicio() {
@@ -271,6 +282,8 @@ public class JavaFXAutoRoad extends Application {
         posY1 = 0;
         posY2 = -800;
         velocidad = 0;
+        posYGuardia = -400;
+        obstAleatorio();
     }
     @Override
     public void start(Stage primaryStage) {
@@ -293,6 +306,12 @@ public class JavaFXAutoRoad extends Application {
                 case LEFT:                 
                     cocheCurrentSpeed = -6;
                     break;
+                case UP:
+                  
+                    break;
+                case DOWN:
+                    
+                    break;    
                 case ENTER:
                     reinicio();
                     velocidad = 2;
