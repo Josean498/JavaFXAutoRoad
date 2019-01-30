@@ -34,16 +34,13 @@ import javafx.scene.shape.Shape;
 public class JavaFXAutoRoad extends Application {
     Pane root;
     Scene scene;
-    int sceneTamX = 900;
-    int sceneTamY = 800;
     int posY1;
     int posY2 = -800;
-    int velocidad = 2;
-    int velocidadGuardia = 4;
+    int velocidad = 4;
+    int velocidadGuardia = 6;
     int cochePosX = 500;
     int cochePosY = 450;
     int cocheCurrentSpeed;
-    int obstAleatorio;
     int posYGuardia = -400;
     ImageView imageGuardia1;
     ImageView imageGuardia2;
@@ -244,13 +241,15 @@ public class JavaFXAutoRoad extends Application {
         
         AnimationTimer animationObstaculos = new AnimationTimer() {
         @Override
-            public void handle(long now) { 
+            public void handle(long now) {
+//                int obstAleatorioPosY;
+//                obstAleatorioPosY = random.nextInt(250);
                 imageGuardia1.setY(posYGuardia);
                 imageGuardia2.setY(posYGuardia);
                 imageGuardia3.setY(posYGuardia);
                 posYGuardia += velocidadGuardia;
                 if (posYGuardia >= 800){
-                    posYGuardia = -200;
+                    posYGuardia = -150;
                     obstAleatorio();
                 }
             }
@@ -259,10 +258,11 @@ public class JavaFXAutoRoad extends Application {
     }
     
     public void obstAleatorio() {
+        int obstAleatorio;
         obstAleatorio = random.nextInt(4);
         switch(obstAleatorio) {
                 case 0:
-                    imageGuardia1.setX(45);
+                    imageGuardia1.setX(40);
                     break;
                 case 1:                 
                     imageGuardia1.setX(240);
@@ -274,20 +274,64 @@ public class JavaFXAutoRoad extends Application {
                     imageGuardia1.setX(630);
                     break;
             }
+        int obstAleatorio2;
+        obstAleatorio2 = random.nextInt(4);
+        switch(obstAleatorio2) {
+                case 0:
+                    imageGuardia2.setX(40);
+                    break;
+                case 1:                 
+                    imageGuardia2.setX(240);
+                    break;
+                case 2:
+                    imageGuardia2.setX(430);
+                    break;
+                case 3:
+                    imageGuardia2.setX(630);
+                    break;
+            }
+        int obstAleatorio3;
+        obstAleatorio3 = random.nextInt(4);
+        switch(obstAleatorio3) {
+                case 0:
+                    imageGuardia3.setX(40);
+                    break;
+                case 1:                 
+                    imageGuardia3.setX(240);
+                    break;
+                case 2:
+                    imageGuardia3.setX(430);
+                    break;
+                case 3:
+                    imageGuardia3.setX(630);
+                    break;
+            }
     }
 
+    public void intro () {
+//        intro = new Image(getClass().getResourceAsStream("images/Intro.jpg"));
+//        intro1 = new ImageView();
+//        intro1.setImage(intro);
+//        intro1.setFitHeight(720);
+//        intro1.setFitWidth(1280);
+//        root.getChildren().add(intro1);
+    }
+    
     public void reinicio() {
         cochePosX = 500;
         cochePosY = 450;
         posY1 = 0;
         posY2 = -800;
         velocidad = 0;
+        velocidadGuardia = 0;
         posYGuardia = -400;
         obstAleatorio();
     }
     @Override
     public void start(Stage primaryStage) {
         root = new Pane();
+        int sceneTamX = 900;
+        int sceneTamY = 800;
         scene = new Scene(root, sceneTamX, sceneTamY, Color.GRAY);
         primaryStage.setTitle("AutoroadFX");
         primaryStage.setScene(scene);
@@ -301,20 +345,16 @@ public class JavaFXAutoRoad extends Application {
         scene.setOnKeyPressed((KeyEvent event) -> {  
             switch(event.getCode()) {
                 case RIGHT:
-                    cocheCurrentSpeed = 6;
+                    cocheCurrentSpeed = 7;
                     break;
                 case LEFT:                 
-                    cocheCurrentSpeed = -6;
-                    break;
-                case UP:
-                  
-                    break;
-                case DOWN:
-                    
-                    break;    
+                    cocheCurrentSpeed = -7;
+                    break;   
                 case ENTER:
                     reinicio();
-                    velocidad = 2;
+                    velocidad = 4;
+                    velocidadGuardia = 6;
+//                    intro1.setVisible(false);
                     break;
             } 
         }); 
