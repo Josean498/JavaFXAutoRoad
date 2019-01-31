@@ -36,8 +36,8 @@ public class JavaFXAutoRoad extends Application {
     Scene scene;
     int posY1;
     int posY2 = -800;
-    int velocidad = 4;
-    int velocidadGuardia = 6;
+    int velocidad = 0;
+    int velocidadGuardia = 0;
     int cochePosX = 500;
     int cochePosY = 450;
     int cocheCurrentSpeed;
@@ -45,6 +45,8 @@ public class JavaFXAutoRoad extends Application {
     ImageView imageGuardia1;
     ImageView imageGuardia2;
     ImageView imageGuardia3;
+    ImageView intro1;
+    ImageView score1;
     Group groupCoche = new Group();
     Random random = new Random();
     Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
@@ -242,8 +244,6 @@ public class JavaFXAutoRoad extends Application {
         AnimationTimer animationObstaculos = new AnimationTimer() {
         @Override
             public void handle(long now) {
-//                int obstAleatorioPosY;
-//                obstAleatorioPosY = random.nextInt(250);
                 imageGuardia1.setY(posYGuardia);
                 imageGuardia2.setY(posYGuardia);
                 imageGuardia3.setY(posYGuardia);
@@ -309,12 +309,23 @@ public class JavaFXAutoRoad extends Application {
     }
 
     public void intro () {
-//        intro = new Image(getClass().getResourceAsStream("images/Intro.jpg"));
-//        intro1 = new ImageView();
-//        intro1.setImage(intro);
-//        intro1.setFitHeight(720);
-//        intro1.setFitWidth(1280);
-//        root.getChildren().add(intro1);
+        Image intro = new Image(getClass().getResourceAsStream("images/intro1.jpeg"));
+        intro1 = new ImageView();
+        intro1.setImage(intro);
+        intro1.setFitHeight(800);
+        intro1.setFitWidth(900);
+        root.getChildren().add(intro1);
+    }
+    
+    public void score() {
+        Image score = new Image(getClass().getResourceAsStream("images/score.png"));
+        score1 = new ImageView();
+        score1.setImage(score);
+        score1.setFitHeight(40);
+        score1.setFitWidth(90);
+        score1.setX(70);
+        score1.setY(20);
+        root.getChildren().add(score1);
     }
     
     public void reinicio() {
@@ -333,28 +344,30 @@ public class JavaFXAutoRoad extends Application {
         int sceneTamX = 900;
         int sceneTamY = 800;
         scene = new Scene(root, sceneTamX, sceneTamY, Color.GRAY);
-        primaryStage.setTitle("AutoroadFX");
+        primaryStage.setTitle("Autoroad");
         primaryStage.setScene(scene);
         primaryStage.show();
         this.carretera();
         this.obstáculos();
         this.coche();
+        this.score();
+        this.intro();
         /*
         Si la tecla es pulsada se mueve y cuando es soltada se queda en la pos que está
         */
         scene.setOnKeyPressed((KeyEvent event) -> {  
             switch(event.getCode()) {
                 case RIGHT:
-                    cocheCurrentSpeed = 7;
+                    cocheCurrentSpeed = 6;
                     break;
                 case LEFT:                 
-                    cocheCurrentSpeed = -7;
+                    cocheCurrentSpeed = -6;
                     break;   
                 case ENTER:
                     reinicio();
                     velocidad = 4;
                     velocidadGuardia = 6;
-//                    intro1.setVisible(false);
+                    intro1.setVisible(false);
                     break;
             } 
         }); 
