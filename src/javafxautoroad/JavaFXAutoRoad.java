@@ -1,4 +1,5 @@
 /*
+ * explicar juego!!!
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -28,8 +29,8 @@ import static javafx.scene.paint.Color.RED;
 import static javafx.scene.paint.Color.WHITE;
 import javafx.scene.shape.Shape;
 /* 
- * @author José Antonio Naranjo Ortega.
- * 1ºDAW.
+ @author José Antonio Naranjo Ortega.
+ 1ºDAW.
  */
 public class JavaFXAutoRoad extends Application {
     Pane root;
@@ -41,15 +42,19 @@ public class JavaFXAutoRoad extends Application {
     int cochePosX = 500;
     int cochePosY = 450;
     int cocheCurrentSpeed;
-    int posYGuardia = -400;
+    int posYGuardia;
     ImageView imageGuardia1;
     ImageView imageGuardia2;
     ImageView imageGuardia3;
     ImageView intro1;
     ImageView score1;
     Group groupCoche = new Group();
+    Group groupGuardia = new Group();
+    Group groupGuardia2 = new Group();
+    Group groupGuardia3 = new Group();
     Random random = new Random();
     Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
+    Rectangle rectangleGuardia1 = new Rectangle();
     /*
     Creación de un método para el diseño del coche:
     */
@@ -168,7 +173,6 @@ public class JavaFXAutoRoad extends Application {
         root.getChildren().add(groupCoche);
         
     }
-    
     /*
     Creación de un método para la carretera y el moviemnto infinito de la imagen:
     */
@@ -217,28 +221,31 @@ public class JavaFXAutoRoad extends Application {
         };
       animationCarretera.start();
     }
-    
     /*
     Creación de un método para los obstáculos para que se vayan generando en posiciones aleatorias:
     */
     public void obstáculos () {
         Image imageGuardia = new Image(getClass().getResourceAsStream("images/guardia.png"));
         imageGuardia1 = new ImageView(imageGuardia);
-        root.getChildren().add(imageGuardia1);
+        groupGuardia.getChildren().add(imageGuardia1);
         imageGuardia1.setFitHeight(160);
         imageGuardia1.setFitWidth(220);
-//        Rectangle rectangleGuardia1 = new Rectangle(0,-800,170,150);
+        rectangleGuardia1 = new Rectangle(0,posYGuardia,100,100);
         
         imageGuardia2 = new ImageView(imageGuardia);
-        root.getChildren().add(imageGuardia2);
+        groupGuardia2.getChildren().add(imageGuardia2);
         imageGuardia2.setFitHeight(160);
         imageGuardia2.setFitWidth(220);
 //        Rectangle rectangleGuardia2 = new Rectangle(400,-800,170,150);
 
         imageGuardia3 = new ImageView(imageGuardia);
-        root.getChildren().add(imageGuardia3);
+        groupGuardia3.getChildren().add(imageGuardia3);
         imageGuardia3.setFitHeight(160);
         imageGuardia3.setFitWidth(220);
+        
+        root.getChildren().add(groupGuardia);
+        root.getChildren().add(groupGuardia2);
+        root.getChildren().add(groupGuardia3);
 //        Rectangle rectangleGuardia3 = new Rectangle(600,-800,170,150);
         
         AnimationTimer animationObstaculos = new AnimationTimer() {
@@ -256,7 +263,9 @@ public class JavaFXAutoRoad extends Application {
         };
         animationObstaculos.start();
     }
-    
+    /*
+    Método para generar posiciones aleatorias en el eje X.
+    */
     public void obstAleatorio() {
         int obstAleatorio;
         obstAleatorio = random.nextInt(4);
@@ -307,7 +316,9 @@ public class JavaFXAutoRoad extends Application {
                     break;
             }
     }
-
+    /*
+    Método para la imagen inicial del juego.
+    */
     public void intro () {
         Image intro = new Image(getClass().getResourceAsStream("images/intro1.jpeg"));
         intro1 = new ImageView();
@@ -316,7 +327,9 @@ public class JavaFXAutoRoad extends Application {
         intro1.setFitWidth(900);
         root.getChildren().add(intro1);
     }
-    
+    /*
+    Método para la puntucaion 
+    */
     public void score() {
         Image score = new Image(getClass().getResourceAsStream("images/score.png"));
         score1 = new ImageView();
@@ -327,7 +340,9 @@ public class JavaFXAutoRoad extends Application {
         score1.setY(20);
         root.getChildren().add(score1);
     }
-    
+    /*
+    Método para el reinicio del juego.
+    */
     public void reinicio() {
         cochePosX = 500;
         cochePosY = 450;
