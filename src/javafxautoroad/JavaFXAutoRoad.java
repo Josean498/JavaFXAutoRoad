@@ -55,6 +55,8 @@ public class JavaFXAutoRoad extends Application {
     Random random = new Random();
     Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
     Rectangle rectangleGuardia1 = new Rectangle();
+    Rectangle rectangleGuardia2 = new Rectangle();
+    Rectangle rectangleGuardia3 = new Rectangle();
     /*
     Creación de un método para el diseño del coche:
     */
@@ -230,89 +232,110 @@ public class JavaFXAutoRoad extends Application {
         groupGuardia.getChildren().add(imageGuardia1);
         imageGuardia1.setFitHeight(160);
         imageGuardia1.setFitWidth(220);
-        rectangleGuardia1 = new Rectangle(0,posYGuardia,100,100);
+        rectangleGuardia1 = new Rectangle(55,55,130,90);
+        groupGuardia.getChildren().add(rectangleGuardia1);
+        rectangleGuardia1.setVisible(false);
+        
         
         imageGuardia2 = new ImageView(imageGuardia);
         groupGuardia2.getChildren().add(imageGuardia2);
         imageGuardia2.setFitHeight(160);
         imageGuardia2.setFitWidth(220);
-//        Rectangle rectangleGuardia2 = new Rectangle(400,-800,170,150);
+        rectangleGuardia2 = new Rectangle(55,55,130,90);
+        groupGuardia2.getChildren().add(rectangleGuardia2);
+        rectangleGuardia2.setVisible(false);
 
         imageGuardia3 = new ImageView(imageGuardia);
         groupGuardia3.getChildren().add(imageGuardia3);
         imageGuardia3.setFitHeight(160);
         imageGuardia3.setFitWidth(220);
+        rectangleGuardia3 = new Rectangle(55,55,130,90);
+        groupGuardia3.getChildren().add(rectangleGuardia3);
+        rectangleGuardia3.setVisible(false);
         
         root.getChildren().add(groupGuardia);
         root.getChildren().add(groupGuardia2);
-        root.getChildren().add(groupGuardia3);
-//        Rectangle rectangleGuardia3 = new Rectangle(600,-800,170,150);
-        
+        root.getChildren().add(groupGuardia3);        
+
         AnimationTimer animationObstaculos = new AnimationTimer() {
         @Override
             public void handle(long now) {
-                imageGuardia1.setY(posYGuardia);
-                imageGuardia2.setY(posYGuardia);
-                imageGuardia3.setY(posYGuardia);
+                groupGuardia.setLayoutY(posYGuardia);
+                groupGuardia2.setLayoutY(posYGuardia);
+                groupGuardia3.setLayoutY(posYGuardia);
                 posYGuardia += velocidadGuardia;
                 if (posYGuardia >= 800){
                     posYGuardia = -150;
                     obstAleatorio();
                 }
+                Shape shapeColision3 = Shape.intersect(rectangleGuardia1, rectangleCoche);
+                boolean colisionVacia3 = shapeColision3.getBoundsInLocal().isEmpty();
+                if(colisionVacia3 == false) {
+                    reinicio();
+                }
+                Shape shapeColision4 = Shape.intersect(rectangleGuardia2, rectangleCoche);
+                boolean colisionVacia4 = shapeColision4.getBoundsInLocal().isEmpty();
+                if(colisionVacia4 == false) {
+                    reinicio();
+                }
+                Shape shapeColision5 = Shape.intersect(rectangleGuardia3, rectangleCoche);
+                boolean colisionVacia5 = shapeColision5.getBoundsInLocal().isEmpty();
+                if(colisionVacia5 == false) {
+                    reinicio();
+                }
             }
+            
         };
         animationObstaculos.start();
     }
-    /*
-    Método para generar posiciones aleatorias en el eje X.
-    */
+    /*Método para generar posiciones aleatorias en el eje X.*/
     public void obstAleatorio() {
         int obstAleatorio;
         obstAleatorio = random.nextInt(4);
         switch(obstAleatorio) {
                 case 0:
-                    imageGuardia1.setX(40);
+                    groupGuardia.setLayoutX(40);
                     break;
                 case 1:                 
-                    imageGuardia1.setX(240);
+                    groupGuardia.setLayoutX(240);
                     break;
                 case 2:
-                    imageGuardia1.setX(430);
+                    groupGuardia.setLayoutX(430);
                     break;
                 case 3:
-                    imageGuardia1.setX(630);
+                    groupGuardia.setLayoutX(630);
                     break;
             }
         int obstAleatorio2;
         obstAleatorio2 = random.nextInt(4);
         switch(obstAleatorio2) {
                 case 0:
-                    imageGuardia2.setX(40);
+                    groupGuardia2.setLayoutX(40);
                     break;
                 case 1:                 
-                    imageGuardia2.setX(240);
+                    groupGuardia2.setLayoutX(240);
                     break;
                 case 2:
-                    imageGuardia2.setX(430);
+                    groupGuardia2.setLayoutX(430);
                     break;
                 case 3:
-                    imageGuardia2.setX(630);
+                    groupGuardia2.setLayoutX(630);
                     break;
             }
         int obstAleatorio3;
         obstAleatorio3 = random.nextInt(4);
         switch(obstAleatorio3) {
                 case 0:
-                    imageGuardia3.setX(40);
+                    groupGuardia3.setLayoutX(40);
                     break;
                 case 1:                 
-                    imageGuardia3.setX(240);
+                    groupGuardia3.setLayoutX(240);
                     break;
                 case 2:
-                    imageGuardia3.setX(430);
+                    groupGuardia3.setLayoutX(430);
                     break;
                 case 3:
-                    imageGuardia3.setX(630);
+                    groupGuardia3.setLayoutX(630);
                     break;
             }
     }
