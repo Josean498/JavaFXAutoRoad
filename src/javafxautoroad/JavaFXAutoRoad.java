@@ -28,10 +28,7 @@ import static javafx.scene.paint.Color.ORANGE;
 import static javafx.scene.paint.Color.RED;
 import static javafx.scene.paint.Color.WHITE;
 import javafx.scene.shape.Shape;
-/* 
- @author José Antonio Naranjo Ortega.
- 1ºDAW.
- */
+/* @author José Antonio Naranjo Ortega.1ºDAW. */
 public class JavaFXAutoRoad extends Application {
     Pane root;
     Scene scene;
@@ -48,6 +45,7 @@ public class JavaFXAutoRoad extends Application {
     ImageView imageGuardia3;
     ImageView intro1;
     ImageView score1;
+    ImageView gta;
     Group groupCoche = new Group();
     Group groupGuardia = new Group();
     Group groupGuardia2 = new Group();
@@ -57,9 +55,7 @@ public class JavaFXAutoRoad extends Application {
     Rectangle rectangleGuardia1 = new Rectangle();
     Rectangle rectangleGuardia2 = new Rectangle();
     Rectangle rectangleGuardia3 = new Rectangle();
-    /*
-    Creación de un método para el diseño del coche:
-    */
+    /* Creación de un método para el diseño del coche: */
     public void coche () {
             /*
             Rectángulo grande del coche, parte trasera del coche.
@@ -175,9 +171,7 @@ public class JavaFXAutoRoad extends Application {
         root.getChildren().add(groupCoche);
         
     }
-    /*
-    Creación de un método para la carretera y el moviemnto infinito de la imagen:
-    */
+    /* Creación de un método para la carretera y el moviemnto infinito de la imagen: */
     public void carretera () {
        Image imageCarretera = new Image(getClass().getResourceAsStream("images/carretera.png"));
        ImageView imageCarretera1 = new ImageView(imageCarretera);
@@ -215,40 +209,41 @@ public class JavaFXAutoRoad extends Application {
            boolean colisionVacia2 = shapeColision2.getBoundsInLocal().isEmpty();
             if(colisionVacia == false) {
                 reinicio();
+                score1.setVisible(false);
+                groupCoche.setVisible(false);
             }
             if(colisionVacia2 == false) {
                 reinicio();
+                score1.setVisible(false);
+                groupCoche.setVisible(false);   
             }
         }
         };
       animationCarretera.start();
     }
-    /*
-    Creación de un método para los obstáculos para que se vayan generando en posiciones aleatorias:
-    */
+    /* Creación de un método para los obstáculos para que se vayan generando en posiciones aleatorias: */
     public void obstáculos () {
         Image imageGuardia = new Image(getClass().getResourceAsStream("images/guardia.png"));
         imageGuardia1 = new ImageView(imageGuardia);
         groupGuardia.getChildren().add(imageGuardia1);
-        imageGuardia1.setFitHeight(160);
-        imageGuardia1.setFitWidth(220);
+        imageGuardia1.setFitHeight(180);
+        imageGuardia1.setFitWidth(230);
         rectangleGuardia1 = new Rectangle(55,55,130,90);
         groupGuardia.getChildren().add(rectangleGuardia1);
         rectangleGuardia1.setVisible(false);
-        
-        
+
         imageGuardia2 = new ImageView(imageGuardia);
         groupGuardia2.getChildren().add(imageGuardia2);
-        imageGuardia2.setFitHeight(160);
-        imageGuardia2.setFitWidth(220);
+        imageGuardia2.setFitHeight(180);
+        imageGuardia2.setFitWidth(230);
         rectangleGuardia2 = new Rectangle(55,55,130,90);
         groupGuardia2.getChildren().add(rectangleGuardia2);
         rectangleGuardia2.setVisible(false);
 
         imageGuardia3 = new ImageView(imageGuardia);
         groupGuardia3.getChildren().add(imageGuardia3);
-        imageGuardia3.setFitHeight(160);
-        imageGuardia3.setFitWidth(220);
+        imageGuardia3.setFitHeight(180);
+        imageGuardia3.setFitWidth(230);
         rectangleGuardia3 = new Rectangle(55,55,130,90);
         groupGuardia3.getChildren().add(rectangleGuardia3);
         rectangleGuardia3.setVisible(false);
@@ -257,6 +252,12 @@ public class JavaFXAutoRoad extends Application {
         root.getChildren().add(groupGuardia2);
         root.getChildren().add(groupGuardia3);        
 
+        Image wasted = new Image(getClass().getResourceAsStream("images/gta.png"));
+        gta = new ImageView(wasted);
+        root.getChildren().add(gta);
+        gta.setVisible(false);
+        gta.setLayoutX(250);
+        gta.setLayoutY(150);
         AnimationTimer animationObstaculos = new AnimationTimer() {
         @Override
             public void handle(long now) {
@@ -272,32 +273,41 @@ public class JavaFXAutoRoad extends Application {
                 boolean colisionVacia3 = shapeColision3.getBoundsInLocal().isEmpty();
                 if(colisionVacia3 == false) {
                     reinicio();
+                    gta.setVisible(true);
+                    score1.setVisible(false);
+                    groupCoche.setVisible(false);
                 }
                 Shape shapeColision4 = Shape.intersect(rectangleGuardia2, rectangleCoche);
                 boolean colisionVacia4 = shapeColision4.getBoundsInLocal().isEmpty();
                 if(colisionVacia4 == false) {
                     reinicio();
+                    gta.setVisible(true);
+                    score1.setVisible(false);
+                    groupCoche.setVisible(false);
                 }
                 Shape shapeColision5 = Shape.intersect(rectangleGuardia3, rectangleCoche);
                 boolean colisionVacia5 = shapeColision5.getBoundsInLocal().isEmpty();
                 if(colisionVacia5 == false) {
                     reinicio();
+                    gta.setVisible(true);
+                    score1.setVisible(false);
+                    groupCoche.setVisible(false);
                 }
             }
             
         };
         animationObstaculos.start();
     }
-    /*Método para generar posiciones aleatorias en el eje X.*/
+    /* Método para generar posiciones aleatorias en el eje X. */
     public void obstAleatorio() {
         int obstAleatorio;
         obstAleatorio = random.nextInt(4);
         switch(obstAleatorio) {
                 case 0:
-                    groupGuardia.setLayoutX(40);
+                    groupGuardia.setLayoutX(30);
                     break;
                 case 1:                 
-                    groupGuardia.setLayoutX(240);
+                    groupGuardia.setLayoutX(230);
                     break;
                 case 2:
                     groupGuardia.setLayoutX(430);
@@ -310,10 +320,10 @@ public class JavaFXAutoRoad extends Application {
         obstAleatorio2 = random.nextInt(4);
         switch(obstAleatorio2) {
                 case 0:
-                    groupGuardia2.setLayoutX(40);
+                    groupGuardia2.setLayoutX(30);
                     break;
                 case 1:                 
-                    groupGuardia2.setLayoutX(240);
+                    groupGuardia2.setLayoutX(230);
                     break;
                 case 2:
                     groupGuardia2.setLayoutX(430);
@@ -326,10 +336,10 @@ public class JavaFXAutoRoad extends Application {
         obstAleatorio3 = random.nextInt(4);
         switch(obstAleatorio3) {
                 case 0:
-                    groupGuardia3.setLayoutX(40);
+                    groupGuardia3.setLayoutX(30);
                     break;
                 case 1:                 
-                    groupGuardia3.setLayoutX(240);
+                    groupGuardia3.setLayoutX(230);
                     break;
                 case 2:
                     groupGuardia3.setLayoutX(430);
@@ -339,9 +349,7 @@ public class JavaFXAutoRoad extends Application {
                     break;
             }
     }
-    /*
-    Método para la imagen inicial del juego.
-    */
+    /* Método para la imagen inicial del juego. */
     public void intro () {
         Image intro = new Image(getClass().getResourceAsStream("images/intro1.jpeg"));
         intro1 = new ImageView();
@@ -350,9 +358,7 @@ public class JavaFXAutoRoad extends Application {
         intro1.setFitWidth(900);
         root.getChildren().add(intro1);
     }
-    /*
-    Método para la puntucaion 
-    */
+    /* Método para la puntucaion. */
     public void score() {
         Image score = new Image(getClass().getResourceAsStream("images/score.png"));
         score1 = new ImageView();
@@ -363,9 +369,7 @@ public class JavaFXAutoRoad extends Application {
         score1.setY(20);
         root.getChildren().add(score1);
     }
-    /*
-    Método para el reinicio del juego.
-    */
+    /* Método para el reinicio del juego. */
     public void reinicio() {
         cochePosX = 500;
         cochePosY = 450;
@@ -375,6 +379,8 @@ public class JavaFXAutoRoad extends Application {
         velocidadGuardia = 0;
         posYGuardia = -400;
         obstAleatorio();
+        gta.setVisible(true);
+        
     }
     @Override
     public void start(Stage primaryStage) {
@@ -390,9 +396,7 @@ public class JavaFXAutoRoad extends Application {
         this.coche();
         this.score();
         this.intro();
-        /*
-        Si la tecla es pulsada se mueve y cuando es soltada se queda en la pos que está
-        */
+        /* Si la tecla es pulsada se mueve y cuando es soltada se queda en la pos que está */
         scene.setOnKeyPressed((KeyEvent event) -> {  
             switch(event.getCode()) {
                 case RIGHT:
@@ -406,6 +410,9 @@ public class JavaFXAutoRoad extends Application {
                     velocidad = 4;
                     velocidadGuardia = 6;
                     intro1.setVisible(false);
+                    gta.setVisible(false);
+                    score1.setVisible(true);
+                    groupCoche.setVisible(true);
                     break;
             } 
         }); 
