@@ -228,7 +228,7 @@ public class JavaFXAutoRoad extends Application {
         groupGuardia.getChildren().add(imageGuardia1);
         imageGuardia1.setFitHeight(180);
         imageGuardia1.setFitWidth(230);
-        rectangleGuardia1 = new Rectangle(55,55,130,90);
+        rectangleGuardia1 = new Rectangle(65,55,140,90);
         groupGuardia.getChildren().add(rectangleGuardia1);
         rectangleGuardia1.setVisible(false);
 
@@ -236,7 +236,7 @@ public class JavaFXAutoRoad extends Application {
         groupGuardia2.getChildren().add(imageGuardia2);
         imageGuardia2.setFitHeight(180);
         imageGuardia2.setFitWidth(230);
-        rectangleGuardia2 = new Rectangle(55,55,130,90);
+        rectangleGuardia2 = new Rectangle(65,55,140,90);
         groupGuardia2.getChildren().add(rectangleGuardia2);
         rectangleGuardia2.setVisible(false);
 
@@ -244,7 +244,7 @@ public class JavaFXAutoRoad extends Application {
         groupGuardia3.getChildren().add(imageGuardia3);
         imageGuardia3.setFitHeight(180);
         imageGuardia3.setFitWidth(230);
-        rectangleGuardia3 = new Rectangle(55,55,130,90);
+        rectangleGuardia3 = new Rectangle(65,55,140,90);
         groupGuardia3.getChildren().add(rectangleGuardia3);
         rectangleGuardia3.setVisible(false);
         
@@ -302,7 +302,7 @@ public class JavaFXAutoRoad extends Application {
     public void obstAleatorio() {
         int obstAleatorio;
         obstAleatorio = random.nextInt(4);
-        switch(obstAleatorio) {
+            switch(obstAleatorio) {
                 case 0:
                     groupGuardia.setLayoutX(30);
                     break;
@@ -318,7 +318,7 @@ public class JavaFXAutoRoad extends Application {
             }
         int obstAleatorio2;
         obstAleatorio2 = random.nextInt(4);
-        switch(obstAleatorio2) {
+            switch(obstAleatorio2) {
                 case 0:
                     groupGuardia2.setLayoutX(30);
                     break;
@@ -334,7 +334,7 @@ public class JavaFXAutoRoad extends Application {
             }
         int obstAleatorio3;
         obstAleatorio3 = random.nextInt(4);
-        switch(obstAleatorio3) {
+            switch(obstAleatorio3) {
                 case 0:
                     groupGuardia3.setLayoutX(30);
                     break;
