@@ -1,9 +1,3 @@
-/*
- * explicar juego!!!
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javafxautoroad;
 
 import java.util.Random;
@@ -28,14 +22,16 @@ import static javafx.scene.paint.Color.ORANGE;
 import static javafx.scene.paint.Color.RED;
 import static javafx.scene.paint.Color.WHITE;
 import javafx.scene.shape.Shape;
+
 /* @author José Antonio Naranjo Ortega.1ºDAW. */
+
 public class JavaFXAutoRoad extends Application {
     Pane root;
     Scene scene;
     int posY1;
     int posY2 = -800;
-    int velocidad = 0;
-    int velocidadGuardia = 0;
+    int velocidad;
+    int velocidadGuardia;
     int cochePosX = 500;
     int cochePosY = 450;
     int cocheCurrentSpeed;
@@ -43,6 +39,7 @@ public class JavaFXAutoRoad extends Application {
     ImageView imageGuardia1;
     ImageView imageGuardia2;
     ImageView imageGuardia3;
+    ImageView imageGuardia4;
     ImageView intro1;
     ImageView score1;
     ImageView gta;
@@ -50,11 +47,13 @@ public class JavaFXAutoRoad extends Application {
     Group groupGuardia = new Group();
     Group groupGuardia2 = new Group();
     Group groupGuardia3 = new Group();
+    Group groupGuardia4 = new Group();
     Random random = new Random();
     Rectangle rectangleCoche = new Rectangle(150, 130, 240, 75);
     Rectangle rectangleGuardia1 = new Rectangle();
     Rectangle rectangleGuardia2 = new Rectangle();
     Rectangle rectangleGuardia3 = new Rectangle();
+    Rectangle rectangleGuardia4 = new Rectangle();
     /* Creación de un método para el diseño del coche: */
     public void coche () {
             /*
@@ -231,6 +230,7 @@ public class JavaFXAutoRoad extends Application {
         rectangleGuardia1 = new Rectangle(65,55,140,90);
         groupGuardia.getChildren().add(rectangleGuardia1);
         rectangleGuardia1.setVisible(false);
+        groupGuardia.setLayoutX(30);
 
         imageGuardia2 = new ImageView(imageGuardia);
         groupGuardia2.getChildren().add(imageGuardia2);
@@ -239,6 +239,7 @@ public class JavaFXAutoRoad extends Application {
         rectangleGuardia2 = new Rectangle(65,55,140,90);
         groupGuardia2.getChildren().add(rectangleGuardia2);
         rectangleGuardia2.setVisible(false);
+        groupGuardia2.setLayoutX(230);
 
         imageGuardia3 = new ImageView(imageGuardia);
         groupGuardia3.getChildren().add(imageGuardia3);
@@ -247,10 +248,21 @@ public class JavaFXAutoRoad extends Application {
         rectangleGuardia3 = new Rectangle(65,55,140,90);
         groupGuardia3.getChildren().add(rectangleGuardia3);
         rectangleGuardia3.setVisible(false);
+        groupGuardia3.setLayoutX(430);
+        
+        imageGuardia4 = new ImageView(imageGuardia);
+        groupGuardia4.getChildren().add(imageGuardia4);
+        imageGuardia4.setFitHeight(180);
+        imageGuardia4.setFitWidth(230);
+        rectangleGuardia4 = new Rectangle(65,55,140,90);
+        groupGuardia4.getChildren().add(rectangleGuardia4);
+        rectangleGuardia4.setVisible(false);
+        groupGuardia4.setLayoutX(630);
         
         root.getChildren().add(groupGuardia);
         root.getChildren().add(groupGuardia2);
-        root.getChildren().add(groupGuardia3);        
+        root.getChildren().add(groupGuardia3); 
+        root.getChildren().add(groupGuardia4);
 
         Image wasted = new Image(getClass().getResourceAsStream("images/gta.png"));
         gta = new ImageView(wasted);
@@ -264,6 +276,7 @@ public class JavaFXAutoRoad extends Application {
                 groupGuardia.setLayoutY(posYGuardia);
                 groupGuardia2.setLayoutY(posYGuardia);
                 groupGuardia3.setLayoutY(posYGuardia);
+                groupGuardia4.setLayoutY(posYGuardia);
                 posYGuardia += velocidadGuardia;
                 if (posYGuardia >= 800){
                     posYGuardia = -150;
@@ -293,6 +306,14 @@ public class JavaFXAutoRoad extends Application {
                     score1.setVisible(false);
                     groupCoche.setVisible(false);
                 }
+                Shape shapeColision6 = Shape.intersect(rectangleGuardia4, rectangleCoche);
+                boolean colisionVacia6 = shapeColision6.getBoundsInLocal().isEmpty();
+                if(colisionVacia6 == false) {
+                    reinicio();
+                    gta.setVisible(true);
+                    score1.setVisible(false);
+                    groupCoche.setVisible(false);
+                }
             }
             
         };
@@ -304,50 +325,50 @@ public class JavaFXAutoRoad extends Application {
         obstAleatorio = random.nextInt(4);
             switch(obstAleatorio) {
                 case 0:
-                    groupGuardia.setLayoutX(30);
+                    groupGuardia.setDisable(true);
                     break;
                 case 1:                 
-                    groupGuardia.setLayoutX(230);
+                    groupGuardia2.setDisable(true);
                     break;
                 case 2:
-                    groupGuardia.setLayoutX(430);
+                    groupGuardia3.setDisable(true);
                     break;
                 case 3:
-                    groupGuardia.setLayoutX(630);
+                    groupGuardia4.setDisable(true);
                     break;
             }
-        int obstAleatorio2;
-        obstAleatorio2 = random.nextInt(4);
-            switch(obstAleatorio2) {
-                case 0:
-                    groupGuardia2.setLayoutX(30);
-                    break;
-                case 1:                 
-                    groupGuardia2.setLayoutX(230);
-                    break;
-                case 2:
-                    groupGuardia2.setLayoutX(430);
-                    break;
-                case 3:
-                    groupGuardia2.setLayoutX(630);
-                    break;
-            }
-        int obstAleatorio3;
-        obstAleatorio3 = random.nextInt(4);
-            switch(obstAleatorio3) {
-                case 0:
-                    groupGuardia3.setLayoutX(30);
-                    break;
-                case 1:                 
-                    groupGuardia3.setLayoutX(230);
-                    break;
-                case 2:
-                    groupGuardia3.setLayoutX(430);
-                    break;
-                case 3:
-                    groupGuardia3.setLayoutX(630);
-                    break;
-            }
+//        int obstAleatorio2;
+//        obstAleatorio2 = random.nextInt(4);
+//            switch(obstAleatorio2) {
+//                case 0:
+//                    groupGuardia2.setLayoutX(30);
+//                    break;
+//                case 1:                 
+//                    groupGuardia2.setLayoutX(230);
+//                    break;
+//                case 2:
+//                    groupGuardia2.setLayoutX(430);
+//                    break;
+//                case 3:
+//                    groupGuardia2.setLayoutX(630);
+//                    break;
+//            }
+//        int obstAleatorio3;
+//        obstAleatorio3 = random.nextInt(4);
+//            switch(obstAleatorio3) {
+//                case 0:
+//                    groupGuardia3.setLayoutX(30);
+//                    break;
+//                case 1:                 
+//                    groupGuardia3.setLayoutX(230);
+//                    break;
+//                case 2:
+//                    groupGuardia3.setLayoutX(430);
+//                    break;
+//                case 3:
+//                    groupGuardia3.setLayoutX(630);
+//                    break;
+//            }
     }
     /* Método para la imagen inicial del juego. */
     public void intro () {
@@ -385,9 +406,9 @@ public class JavaFXAutoRoad extends Application {
     @Override
     public void start(Stage primaryStage) {
         root = new Pane();
-        int sceneTamX = 900;
-        int sceneTamY = 800;
-        scene = new Scene(root, sceneTamX, sceneTamY, Color.GRAY);
+        int SCENETAMX = 900;
+        int SCENETAMY = 800;
+        scene = new Scene(root, SCENETAMX, SCENETAMY, Color.GRAY);
         primaryStage.setTitle("Autoroad");
         primaryStage.setScene(scene);
         primaryStage.show();
